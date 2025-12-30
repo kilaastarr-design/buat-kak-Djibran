@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026: A Special Note</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #38bdf8;
+            --text: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #content {
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s ease-in;
+            padding: 20px;
+        }
+
+        .main-card {
+            border: 1px solid #1e293b;
+            padding: 40px;
+            border-radius: 24px;
+            background: linear-gradient(145deg, #0f172a, #020617);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .typing-text {
+            border-right: 2px solid var(--accent);
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 20px auto;
+            width: 0;
+            animation: typing 3.5s steps(40, end) forwards, blink .75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .hidden-msg { display: none; margin-top: 20px; font-style: italic; color: #94a3b8; }
+    </style>
+</head>
+<body onload="document.getElementById('content').style.opacity='1'">
+
+    <div id="content">
+        <div class="main-card">
+            <h1>2026.</h1>
+            <div class="typing-text">Untuk Kak Djibran yang katanya lagi mati rasa...</div>
+            
+            <p id="message">Ternyata bener ya, martabak jumbo emang lebih berharga.</p>
+            
+            <button onclick="revealMessage()">Tapi tahu nggak?</button>
+            
+            <div id="secret" class="hidden-msg">
+                "Yang spesial juga jauh lebih berharga, karena porsinya nggak bisa ditemuin di mana-mana kalau udah hilang."
+                <br><br>
+                <strong>Happy New Year.</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function revealMessage() {
+            document.getElementById('secret').style.display = 'block';
+            document.querySelector('button').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
