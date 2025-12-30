@@ -3,79 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Kak Djibran</title>
+    <title>For You.</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0a0a0a; --text: #ffffff; --accent: #f8fafc; }
+        :root { --bg: #0a0a0a; --text: #ffffff; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
         canvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 1; }
-        
-        .main-card { 
-            position: relative; 
-            z-index: 10; 
-            text-align: center; 
-            max-width: 500px; 
-            padding: 20px;
-            animation: fadeIn 3s ease-in;
-        }
-
-        h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 2.8rem; 
-            margin-bottom: 20px; 
-            font-style: italic;
-            letter-spacing: -1px;
-        }
-
-        .content-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #a1a1aa;
-            font-weight: 300;
-        }
-
-        .highlight {
-            color: var(--text);
-            font-weight: 600;
-        }
-
+        .main-card { position: relative; z-index: 10; text-align: center; max-width: 450px; padding: 25px; animation: fadeIn 3s ease-in; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 20px; font-style: italic; }
+        .content-text { font-size: 1rem; line-height: 2; color: #a1a1aa; font-weight: 300; }
+        .highlight { color: var(--text); font-weight: 600; border-bottom: 1px solid #334155; }
         #btn-wrap { margin-top: 40px; }
-        
-        button { 
-            background: white; 
-            border: none; 
-            color: black; 
-            padding: 12px 35px; 
-            border-radius: 2px; 
-            cursor: pointer; 
-            transition: 0.5s; 
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        button:hover { letter-spacing: 4px; opacity: 0.8; }
-
-        #final-message { 
-            display: none; 
-            margin-top: 30px; 
-            animation: fadeIn 2s;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        button { background: white; border: none; color: black; padding: 12px 30px; border-radius: 2px; cursor: pointer; transition: 0.5s; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
+        #final-message { display: none; margin-top: 30px; animation: fadeIn 2s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        /* Style untuk audio player agar tersembunyi tapi tetap ada */
+        audio { display: none; }
     </style>
 </head>
 <body>
 
     <canvas id="fireworks"></canvas>
+    
+    <audio id="mySong" loop>
+        <source src="https://www.mboxdrive.com/The%201975%20-%20About%20You.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="main-card">
         <div id="intro">
-            <h1>Dear, Kak Djibran.</h1>
+            <h1>Hi, Kak Djibran.</h1>
             <p class="content-text">
-                Tahun ini hampir selesai, dan aku cuma mau bilang...<br>
-                Terima kasih ya sudah bertahan sampai sejauh ini.<br>
-                Terima kasih sudah mau ada dan nemenin aku di tahun ini.
+                Tahun ini penuh kejutan ya? <br>
+                Dan salah satu bagian yang paling aku syukuri adalah... <br>
+                <span class="highlight">nemuin kamu dan kamu yang nemenin aku.</span>
             </p>
             <div id="btn-wrap">
                 <button onclick="reveal()">Buka Pesan</button>
@@ -84,17 +44,20 @@
 
         <div id="final-message">
             <p class="content-text">
-                Mungkin banyak hal yang berubah, tapi bagiku...<br>
-                <span class="highlight">Kamu tetap sosok yang spesial dan berharga.</span><br><br>
-                Semoga di tahun yang baru nanti, <br>kebahagiaan selalu nemuin jalan untuk sampai ke kamu.
+                Makasih ya udah bertahan sampai detik ini, <br>
+                makasih juga udah mau tetap ada di sini. <br><br>
+                Mungkin di luar sana banyak yang jumbo, <br>tapi bagiku... <br>
+                <span class="highlight">kamu satu-satunya yang paling spesial.</span><br><br>
+                Selamat tahun baru, ya. <br>Jangan hilang, karena kamu berharga.
             </p>
-            <h1 style="font-size: 1.8rem; margin-top: 40px;">Happy New Year.</h1>
+            <h1 style="font-size: 1.5rem; margin-top: 35px;">Happy New Year, Ranz. ✨</h1>
         </div>
     </div>
 
     <script>
         const canvas = document.getElementById('fireworks');
         const ctx = canvas.getContext('2d');
+        const song = document.getElementById('mySong');
         let particles = [];
 
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -107,38 +70,27 @@
                 this.velocity = { x: (Math.random() - 0.5) * 6, y: (Math.random() - 0.5) * 6 };
                 this.alpha = 1; this.friction = 0.96;
             }
-            draw() {
-                ctx.globalAlpha = this.alpha;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
-                ctx.fillStyle = this.color; ctx.fill();
-            }
-            update() {
-                this.velocity.x *= this.friction; this.velocity.y *= this.friction;
-                this.x += this.velocity.x; this.y += this.velocity.y;
-                this.alpha -= 0.008;
-            }
+            draw() { ctx.globalAlpha = this.alpha; ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
+            update() { this.velocity.x *= this.friction; this.velocity.y *= this.friction; this.x += this.velocity.x; this.y += this.velocity.y; this.alpha -= 0.008; }
         }
 
         function createFirework() {
             const x = Math.random() * canvas.width;
             const y = Math.random() * (canvas.height * 0.6);
             const color = `hsl(${Math.random() * 360}, 50%, 70%)`;
-            for (let i = 0; i < 30; i++) { particles.push(new Particle(x, y, color)); }
+            for (let i = 0; i < 35; i++) { particles.push(new Particle(x, y, color)); }
         }
 
         function animate() {
             ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => {
-                if (p.alpha > 0) { p.update(); p.draw(); }
-                else { particles.splice(i, 1); }
-            });
+            particles.forEach((p, i) => { if (p.alpha > 0) { p.update(); p.draw(); } else { particles.splice(i, 1); } });
             requestAnimationFrame(animate);
         }
         animate();
 
         function reveal() {
+            song.play(); // Lagu akan berputar otomatis saat tombol diklik
             document.getElementById('intro').style.display = 'none';
             document.getElementById('final-message').style.display = 'block';
             setInterval(createFirework, 800);
